@@ -1,0 +1,1 @@
+This probe runs group_tool and checks the status of mounted cluster shares.  If the status is 'none', all is good, otherwise you got problems son!

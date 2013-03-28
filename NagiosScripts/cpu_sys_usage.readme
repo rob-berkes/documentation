@@ -1,0 +1,1 @@
+This script monitors the system CPU usage per node over a three-second period.  It pulls the files from /proc/stats and calculates the system load over those three seconds.  Crashes in cluster have been observed when the SYS cpu metric goes above 60%

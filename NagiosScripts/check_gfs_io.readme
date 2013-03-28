@@ -1,0 +1,1 @@
+This probe checks the speed of I/O to a mounted GFS share.  A locked share will show extremely slow speeds, say 1 MB/s or less.  Faster speeds than this usually indicate the GFS is ok.  

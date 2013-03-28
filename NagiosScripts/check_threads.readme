@@ -1,0 +1,1 @@
+This check will monitor the number of threads (not processes) active on the system.  This was useful to detect lockups of Java, which would accumulate threads when it occurred.  

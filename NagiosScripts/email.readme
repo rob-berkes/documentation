@@ -1,0 +1,76 @@
+Subject: Troubleshooting Nagios pages
+From: Rob Berkes
+To: BTS_Infrastructure
+Date Sent: 1/26/2012 4:48:47 PM
+Hi all,
+We now have a number of new monitors in place that will page us if we are having a problem in the AcmeCo cluster.   Here are some of the errors we’re likely to see while on call:
+ 
+The most serious is probably the monitor watching the status of the AcmeCo cluster services.  The GFS shared file system is one of these.  Normally, they should all have a status of ‘none’.  If that changes, we may see this page:
+ 
+***** Nagios 3.2.3 *****
+ 
+Notification Type: PROBLEM
+ 
+Service: GFS Status
+Host: Production JBoss1
+Address: 192.168.10.226
+State: CRITICAL
+ 
+Date/Time: Wed Jan 25 10:14:42 CST 2012
+ 
+Additional Info:
+ 
+GFS ERROR!  Status is FAIL_ALL_STOPPED
+ 
+The “FAIL_ALL_STOPPED” is a serious error, and indicates that a node was probably fenced and kicked out of the cluster.   Please call me right away with this error, getting the node back into the cluster ASAP makes recovery quicker.   If you feel comfortable in Linux you can run “cman_tool nodes” as root to see which node was kicked out.  Go into vSphere and do a hard reset (CTRL-T) on that node.  A graceful shutdown is neither needed nor the best idea here, since the node is out of the cluster, it could cause corruption if it somehow is able to write to the GFS, so a hard reset is desirable here.
+ 
+Another error we may see is:
+ 
+***** Nagios 3.2.3 *****
+ 
+Notification Type: PROBLEM
+ 
+Service: JBoss 8443
+Host: Production Proc1
+Address: 192.168.10.232
+State: CRITICAL
+ 
+Date/Time: Wed Jan 25 10:19:42 CST 2012
+ 
+Additional Info:
+ 
+CRITICAL - Socket timeout after 10 seconds
+ 
+This is probably not a big deal, most likely just an agent timeout.  We seem to get these more during the day than at night,  we can tweak the settings to hopefully prevent getting too many of these.  When we get them I verify AcmeCo is running on that node with this command:
+ 
+[root@modeloffice-jboss1 ~]# pgrep -f acmecoonline
+26334
+26343
+[root@modeloffice-jboss1 ~]#
+ 
+As long as the command returns some process ids, as it does above, AcmeCo is running.  This error almost always clears after a time.  If the affected node is one of the proc servers, we definitely need to make sure all is well on that machine.  The p-jboss nodes, on the other hand, are load balanced and only a cause for concern if we start seeing a number of these pages from different nodes. 
+ 
+We also have a monitor on each node that will alarm if the load average gets too high:
+ 
+***** Nagios 3.2.3 *****
+ 
+Notification Type: PROBLEM
+ 
+Service: System load
+Host: Production JBoss1
+Address: 192.168.11.11
+State: CRITICAL
+ 
+Date/Time: Thu Jan 26 16:24:29 CST 2012
+ 
+Additional Info:
+ 
+NRPE: CRITICAL – load average 5.03,3.23,2.02
+ 
+This message is an indication of a stressed server that may soon be fenced and kicked out of the cluster.  The higher the load average, the worse it is.  Normally it should be below 1, if the first number hits five or above, the server is extremely taxed.  I then look for processes that may be taking CPU and kill them.  If AcmeCo is the culprit, I leave it running but disable that node on the F5. 
+ 
+Please feel free to call me anytime you receive these pages and let me know your suggestions and/or comments!  
+Thanks,
+Rob
+ 
+ 
