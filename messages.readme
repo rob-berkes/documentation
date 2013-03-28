@@ -1,0 +1,1 @@
+This is a sample of the logging from my wikicount app running at www.wikitrends.info.   All messages are syslogged to /var/log/messages where it can be picked up by loggers such as Splunk and other syslog aggregators.
