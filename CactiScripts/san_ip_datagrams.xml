@@ -1,0 +1,42 @@
+<interface>
+     <name>Get Number of IP datagrams</name>
+     <description>Pull the number of IP Datagrams from the Fibre switches</description>
+     <oid_index>IF-MIB::ifIndex</oid_index>
+     <oid_num_indexes>IF-MIB::ifIndex.0</oid_num_indexes>    
+     <index_order_type>numeric</index_order_type>
+     <index_order>prIndex</index_order>
+        <index_title_format>|chosen_order_field|</index_title_format>
+
+     <fields>
+          <prIndex>
+                        <name>Index</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>IF-MIB::ifIndex</oid>
+                </prIndex>
+          <prDescr>
+                        <name>PortName</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>IF-MIB::ifDescr</oid>
+                </prDescr>
+
+          <prInOctets>
+               <name>prInDeliveries</name>
+               <method>walk</method>
+               <source>value</source>
+               <direction>output</direction>
+               <oid>IP-MIB::ipInDelivers.0</oid>
+          </prInOctets>
+          <prOutOctets>
+               <name>prOutRequests</name>
+               <method>walk</method>
+               <source>value</source>
+               <direction>output</direction>
+               <oid>IP-MIB::ipOutRequests.0</oid>
+          </prOutOctets>
+
+     </fields>
+</interface>

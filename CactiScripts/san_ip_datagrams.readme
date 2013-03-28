@@ -1,0 +1,3 @@
+This plugin should go into the resource/snmp_queries/ folder and loaded into Cacti the normal way.  It uses SNMP to poll SANs and report the number of IP datagrams going in both directions. This works with EMC and IBM SANs, I believe it should work with all snmp-enabled sans as I believe these OIDs are standards. 
+
+Remember to set the Graph type to AREA when setting up the graph templates..
