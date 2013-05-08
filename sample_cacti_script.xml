@@ -1,0 +1,50 @@
+<interface>
+        <name>Get fcIf Interface Error counters</name>
+        <description>Pull the process table from the fibre switches</description>
+        <oid_index>IF-MIB::ifIndex</oid_index>
+        <index_order_type>numeric</index_order_type>
+        <index_order>fcDescr</index_order>
+        <index_title_format>fcIndex|fcIfWwn|chosen_order_field|</index_title_format>
+
+        <fields>
+                <fcIndex>
+                        <name>Index</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>IF-MIB::ifIndex</oid>
+                </fcIndex>
+                <fcDescr>
+                        <name>PortName</name>
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>input</direction>
+                        <oid>CISCO-FC-FE-MIB::fcIfWwn</oid>
+                </fcDescr>
+
+                <fcIfLinkFails>
+                        <name>fcLinkFails</name>1
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>output</direction>
+                        <oid>CISCO-FC-FE-MIB::fcIfLinkFailures</oid>
+                </fcIfLinkFails>
+
+                <fcIfSyncLosses>
+                        <name>fcSyncLosses</name>1
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>output</direction>
+                        <oid>CISCO-FC-FE-MIB::fcIfSyncLosses</oid>
+                </fcIfSyncLosses>
+
+                <fcIfInvalidTxWords>
+                        <name>fcInvalidTxWords</name>1
+                        <method>walk</method>
+                        <source>value</source>
+                        <direction>output</direction>
+                        <oid>CISCO-FC-FE-MIB::fcIfInvalidTxWords</oid>
+                </fcIfInvalidTxWords>
+        </fields>
+</interface>
+
